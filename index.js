@@ -19,8 +19,11 @@ function renderNode(node, key) {
     if (name === 'style') {
       result[name] = styleParser(attr.value);
     } else if (name === 'onClick') {
-      console.log(attr);
-      result[name] = new Function("e", attr.value);
+      if(attr.value.indexOf("=>") >=0) {
+        result[name] = eval(attr.value);
+      } else {
+        result[name] = new Function(attr.value);
+      }
     } else {
       result[name] = attr.value;
     }
